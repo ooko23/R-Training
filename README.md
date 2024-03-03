@@ -37,22 +37,27 @@ browse avg_age
 tabstat IdNumber,by(A1Age) stat(mean median sd)
 bysort CaseStatus:summarize Height Weight
 
+************************************************************************************************************************************************************************************
 *** listing
 list A1Age
+************************************************************************************************************************************************************************************
 *** sorting
 *** sorting in ascending order
 browse A1Age
 sort A1Age
-
+*************************************************************************************************************************************************************************************
 *** sorting in descending order
 gsort- A1Age
+*************************************************************************************************************************************************************************************
 *** checking for inconsistency
 codebook CaseStatus
 list IdNumber if CaseStatus==3
+******************************************************************************************************************************************
 ***replacing inconsistencies
 replace CaseStatus=1 if IdNumber==1
 replace CaseStatus=2 if IdNumber==31
 codebook CaseStatus
+*******************************************************************************************************************************************************************************
 *** checking missing values
 tab Sex, missing 
 codebook sex
@@ -60,13 +65,16 @@ list IdNumber if Sex==""
 replace Sex="Female" if IdNumber==213
 replace Sex="Male" if IdNumber==48
 codebook Sex
+*******************************************************************************************************************************************************************************
 *** handling duplicates
 duplicates list IdNumber
 browse if IdNumber==51
 drop if IdNumber==51 & A1Age==23
 browse if IdNumber==51
 order A1Age Date
-*** data manipulation-26/01/2023 
+
+*******************************************************************************************************************************************************************************
+*** data manipulation 
 *** generating new variables
 gen age_cat=.
 replace age_cat=1 if A1Age>0 & A1Age<=24
@@ -77,6 +85,8 @@ codebook A1Age
 label define age_cat 1"children"2"youth"3"adult"4"old"
 label values age_cat age_cat
 codebook age_cat
+
+*********************************************************************************************************************************************************************************
 ***Populating new variables by calculation
 gen bmi=Weight/((Height/100)^2)
 browse bmi
@@ -89,13 +99,17 @@ replace bmi_cat="underweight" if bmi2<18
 replace bmi_cat="normal" if bmi2>=18 & bmi2<=24
 codebook bmi_cat
 browse bmi_cat
+**********************************************************************************************************
 codebook A2Occupation
 gen occupation=""
 replace occupation="employed" if A2Occupation=="2 informal" | A2Occupation=="3 formal"
 replace occupation="unemployed" if A2Occupation=="1 unemployed" | A2Occupation=="4 student"
 codebook occupation
+**********************************************************************************************************
 ***subseting a variable
 keep if Sex=="female"
+
+******************************************************************************************************************************************************************************
 ***converting numeric to string
 encode occupation,gen(occupation2)
 *** working with dates

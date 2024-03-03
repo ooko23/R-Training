@@ -1,5 +1,5 @@
 # STI-DATA ANALYSIS
-### Prioject Overview
+### Project Overview
 This project aims to understand some of the risk factors that leads to contraction of STIs among youths.
 ### Data Sources
 STI-data unclean. This data contains risk factors for contracting STIs
@@ -22,10 +22,14 @@ EDA involved exploring the sales data to answer key questions such as;
 *** importing datasets
 import excel "C:\Users\admin\Downloads\STIData.xls",sheet(STIData) firstrow
 
+
 *** viewing dataset
 describe
 codebook A1Age
 codebook A5MaritalStatus
+
+***********************************************************************************************************************************************************************************
+
 *** Compute a variable
 egen avg_age=mean(A1Age)
 browse avg_age
